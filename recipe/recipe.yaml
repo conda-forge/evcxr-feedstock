@@ -1,6 +1,6 @@
 context:
   name: evcxr
-  version: "0.17.0"
+  version: "0.18.0"
 
 package:
   name: ${{ name|lower }}
@@ -8,10 +8,10 @@ package:
 
 source:
   url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 372cee9626d547409d8482116a04a5d59db84ad2faf59468f55e141d21785cd5
+  sha256: 80287d888e8976ffb72a06469d4c1167154caed795ac0897ec5c1e6f1eabbab6
 
 build:
-  number: 1
+  number: 0
   skip:
     - win
   script:
@@ -19,17 +19,17 @@ build:
     # generated from the executable itself, but lack of native osx-arm64 builds
     # prevent us for doing so at build time.
     content: |
-        cargo install --locked --root "${PREFIX}" --no-track evcxr_repl
-        cargo install --locked --root "${PREFIX}" --no-track evcxr_jupyter
-        cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-        (
-          echo export JUPYTER_PATH="${PREFIX}/share/jupyter/"
-          echo "${PREFIX}/bin/evcxr_jupyter" --install
-        ) > "${PREFIX}/bin/.${{ name }}-post-link.sh"
-        (
-          echo export JUPYTER_PATH="${PREFIX}/share/jupyter/"
-          echo "${PREFIX}/bin/evcxr_jupyter" --uninstall
-        ) > "${PREFIX}/bin/.${{ name }}-pre-unlink.sh"
+      cargo install --locked --root "${PREFIX}" --no-track evcxr_repl
+      cargo install --locked --root "${PREFIX}" --no-track evcxr_jupyter
+      cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+      (
+        echo export JUPYTER_PATH="${PREFIX}/share/jupyter/"
+        echo "${PREFIX}/bin/evcxr_jupyter" --install
+      ) > "${PREFIX}/bin/.${{ name }}-post-link.sh"
+      (
+        echo export JUPYTER_PATH="${PREFIX}/share/jupyter/"
+        echo "${PREFIX}/bin/evcxr_jupyter" --uninstall
+      ) > "${PREFIX}/bin/.${{ name }}-pre-unlink.sh"
 
 requirements:
   build:
@@ -47,11 +47,11 @@ tests:
         - evcxr
         - evcxr_jupyter
   - script:
-    - evcxr --help
-    - echo '7 + 6' | evcxr | grep 13
-    - evcxr_jupyter --help
+      - evcxr --help
+      - echo '7 + 6' | evcxr | grep 13
+      - evcxr_jupyter --help
     # Generated at link time
-    - test -f "${PREFIX}/share/jupyter/kernels/rust/kernel.json"
+      - test -f "${PREFIX}/share/jupyter/kernels/rust/kernel.json"
 
 
 about:
