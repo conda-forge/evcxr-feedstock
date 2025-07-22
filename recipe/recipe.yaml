@@ -1,6 +1,6 @@
 context:
   name: evcxr
-  version: "0.20.0"
+  version: "0.21.0"
 
 package:
   name: ${{ name|lower }}
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/${{ name }}/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: d0de5d5b0a8c3d670bfa7328b6dc2a1c58a0ee6d4dc87f8d0679300f439cb3ec
+  sha256: d22511cbb25ce5c8af6ce0b32ced94110b1651bb9445a9e00c7199862b74e093
 
 build:
   number: 0
